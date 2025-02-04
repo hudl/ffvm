@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>ffvm</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.ECR" Version="3.7.406.12" />
+    <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.401.31" />
+    <PackageReference Include="AWSSDK.SSO" Version="3.7.400.82" />
+    <PackageReference Include="AWSSDK.SSOOIDC" Version="3.7.400.82" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FFVM\FFVM.Base.csproj" />
+  </ItemGroup>
+
+</Project>

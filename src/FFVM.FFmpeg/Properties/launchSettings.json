@@ -1,0 +1,25 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "encode_aurora4": {
+      "commandName": "Project",
+      "commandLineArgs": "-i c:\\source\\ffmpeg\\bin\\temp\\sample.ts -c:v libwz264 -quality 3 -c:a libfdk_aac -y out.mp4"
+    },
+    "encode_aurora5": {
+      "commandName": "Project",
+      "commandLineArgs": "-i c:\\source\\ffmpeg\\bin\\temp\\sample.ts -c:v libwz265 -quality 3 -c:a libfdk_aac -y out.mp4"
+    },
+    "encode_x264": {
+      "commandName": "Project",
+      "commandLineArgs": "-i c:\\source\\ffmpeg\\bin\\temp\\sample.ts -c:v libx264 -c:a aac -y out.mp4"
+    },
+    "complex": {
+      "commandName": "Project",
+      "commandLineArgs": "-y  -i 94791\\7d19_5000_000_000_0003.ts -i assets\\GenericScoreboard001\\scoreboard-input-clock.png  -c:v libwz264 -quality 3 -pix_fmt yuv420p -max_muxing_queue_size 9999 -metadata title=\"Hudl\"  -maxrate 5000k -bufsize 7500k -profile:v Main -level:v 4.1 -threads 2 -filter_complex \"nullsrc=s=600x55,format=rgba,drawbox=x='0':y='0':w='185':h='55':color='#000000@1.0':t='fill',drawbox=x='415':y='0':w='120':h='55':color='#000099@1.0':t='fill',drawbox=x='240':y='0':w='120':h='55':color='#353F4A@1.0':t='fill' [teamColor0Filter];[1:v][teamColor0Filter] blend=all_mode=overlay:shortest=1 [blend0Filter];[blend0Filter]drawbox=x='0':y='0':w='65':h='55':color='#000000@1.0':t='fill',drawbox=x='535':y='0':w='65':h='55':color='#000099@1.0':t='fill',drawtext=text='AUTO':fontfile='assets\\fonts\\Teko\\Teko-Regular.ttf':fontsize='36':fontcolor='#E6F2FF':x='85':y='(55-th)/2':shadowcolor=#000000@1.0:shadowx='2':shadowy='2',drawtext=text='TEST':fontfile='assets\\fonts\\Teko\\Teko-Regular.ttf':fontsize='36':fontcolor='#E6F2FF':x='515-tw':y='(55-th)/2':shadowcolor=#000000@1.0:shadowx='2':shadowy='2',drawtext=text='1':fontfile='assets\\fonts\\Teko\\Teko-Regular.ttf':fontsize='44':fontcolor='#FFFFFF':x='(65-tw)/2':y='(55-th)/2':shadowcolor=#000000@1.0:shadowx='2':shadowy='2',drawtext=text='1':fontfile='assets\\fonts\\Teko\\Teko-Regular.ttf':fontsize='44':fontcolor='#FFFFFF':x='600-(65+tw)/2':y='(55-th)/2':shadowcolor=#000000@1.0:shadowx='2':shadowy='2',drawtext=text='\\:':fontfile='assets\\fonts\\Teko\\Teko-Bold.ttf':fontsize='40':fontcolor='#E6F2FF':x='185+55+(120-tw)/2':y='(55-th)/2':shadowcolor=#000000@1.0:shadowx='2':shadowy='2',drawtext=text='00':fontfile='assets\\fonts\\Teko\\Teko-Bold.ttf':fontsize='40':fontcolor='#E6F2FF':x='185+55+(120)/2+5':y='(55-th)/2':shadowcolor=#000000@1.0:shadowx='2':shadowy='2',drawtext=text='0':fontfile='assets\\fonts\\Teko\\Teko-Bold.ttf':fontsize='40':fontcolor='#E6F2FF':x='185+55+(120)/2-tw-5':y='(55-th)/2':shadowcolor=#000000@1.0:shadowx='2':shadowy='2',drawtext=text='1st':fontfile='assets\\fonts\\Teko\\Teko-Regular.ttf':fontsize='36':fontcolor='#C3CEDB':x='415-(55+tw)/2':y='(55-th)/2' [text0Filter];[text0Filter] scale='iw/1':'ih/1' [scaleGraphic0Filter];[v:0][scaleGraphic0Filter] overlay='(660)/1':'955/1':enable='lt(t, 3660.999989)'\" -r 30 -wz264-params open-gop=0:bframes=0:scenecut=0:keyint=60:keyint-min=60 -c:a copy  -mpegts_copyts 1 -copyts -preset fast  -loglevel debug -mpegts_start_pid 0x0041 -mpegts_m2ts_mode -1  94791/reencode_output.ts",
+      "workingDirectory": "C:\\Users\\casey.bateman\\Downloads\\worker"
+    }
+  }
+}

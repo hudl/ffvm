@@ -1,0 +1,88 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "add-repository docker-hub": {
+      "commandName": "Project",
+      "commandLineArgs": "add-repository jrottenberg/ffmpeg jrottenberg"
+    },
+    "add-repository aws-ecr": {
+      "commandName": "Project",
+      "commandLineArgs": "add-repository 843865964756.dkr.ecr.us-east-1.amazonaws.com/t-octo-ubuntu-24-development-container-image octo --profile PlatformEngineer_Octo_4756 --default"
+    },
+    "remove-repository docker-hub": {
+      "commandName": "Project",
+      "commandLineArgs": "remove-repository jrottenberg"
+    },
+    "remove-repository aws-ecr": {
+      "commandName": "Project",
+      "commandLineArgs": "remove-repository sandbox"
+    },
+    "uninstall docker-hub": {
+      "commandName": "Project",
+      "commandLineArgs": "uninstall 4.1_jrottenberg"
+    },
+    "uninstall aws-ecr": {
+      "commandName": "Project",
+      "commandLineArgs": "uninstall 5.0.1_sandbox "
+    },
+    "use image aws-ecr": {
+      "commandName": "Project",
+      "commandLineArgs": "use image 5.0.1_dev-container"
+    },
+    "use image docker-hub": {
+      "commandName": "Project",
+      "commandLineArgs": "use image 7.1_jrottenberg"
+    },
+    "install image default": {
+      "commandName": "Project",
+      "commandLineArgs": "install"
+    },
+    "install image docker-hub": {
+      "commandName": "Project",
+      "commandLineArgs": "install jrottenberg:7.1-ubuntu2404"
+    },
+    "install image aws-ecr": {
+      "commandName": "Project",
+      "commandLineArgs": "install dev-container:0.0.1-5 "
+    },
+    "help": {
+      "commandName": "Project",
+      "commandLineArgs": "help"
+    },
+    "help install": {
+      "commandName": "Project",
+      "commandLineArgs": "help install"
+    },
+    "refresh": {
+      "commandName": "Project",
+      "commandLineArgs": "refresh"
+    },
+    "set-repository aws-ecr": {
+      "commandName": "Project",
+      "commandLineArgs": "set-repository octo "
+    },
+    "set-repository docker-hub": {
+      "commandName": "Project",
+      "commandLineArgs": "set-repository jrottenberg"
+    },
+    "list available aws-ecr": {
+      "commandName": "Project",
+      "commandLineArgs": "list available octo"
+    },
+    "list available docker-hub": {
+      "commandName": "Project",
+      "commandLineArgs": "list available jrottenberg"
+    },
+    "list": {
+      "commandName": "Project",
+      "commandLineArgs": "list"
+    },
+    "list-repository": {
+      "commandName": "Project",
+      "commandLineArgs": "list-repository"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "windows args": {
+      "commandName": "Project",
+      "commandLineArgs": "-i \"c:\\source\\ffmpeg\\bin\\temp\\camera_chunk_fixed.mp4\" -show_streams -print_format json -show_format",
+      "workingDirectory": "C:\\source\\ffmpeg\\bin\\temp"
+    },
+    "linux args": {
+      "commandName": "Project",
+      "commandLineArgs": "-i \"/tmp/1232/myfile.txt\" -c:v libx264 -c:a aac -r 35 -map 0:v -b:v 3000k myoutput.mp4",
+      "workingDirectory": "/tmp"
+    }
+  }
+}
