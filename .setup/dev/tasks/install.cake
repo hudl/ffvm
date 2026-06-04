@@ -135,7 +135,7 @@ Task("configure-installation")
         ProcessHelpers.RunWithFailure("ffvm", $"set installation-path  \"{RepoMetadata.Current.InstallPath}\"", "Failed to set FFVM installation path.");
 
         if (!string.IsNullOrWhiteSpace(RepoMetadata.Current.ConfigurationScript?.SharedSSOProfileName))
-        { 
+        {
             ProcessHelpers.RunWithFailure("ffvm", $"set sso-profile \"{RepoMetadata.Current.ConfigurationScript?.SharedSSOProfileName}\"", "Failed to set FFVM SSO profile.");
         }
 
@@ -146,21 +146,21 @@ Task("configure-installation")
             return;
         }
 
-        foreach (var repository in RepoMetadata.Current.ConfigurationScript?.Repositories) 
-        { 
+        foreach (var repository in RepoMetadata.Current.ConfigurationScript?.Repositories ?? new List<CustomRepository>())
+        {
             Information($"Adding {repository.Name} image repository...");
             var defaultText = repository.IsDefault ? "--default" : string.Empty;
             ProcessHelpers.RunWithFailure("ffvm", $"add-repository {repository.Url} {repository.Name} --profile {repository.Auth} {defaultText}", "Failed to add repository.");
         }
 
-        foreach (var image in RepoMetadata.Current.ConfigurationScript?.Images) 
+        foreach (var image in RepoMetadata.Current.ConfigurationScript?.Images ?? new List<string>())
         {
-            Information($"Downloading image '{image}'..."); 
+            Information($"Downloading image '{image}'...");
             ProcessHelpers.RunWithFailure("ffvm", $"install {image}", "Failed to install image.");
         }
 
         if (!string.IsNullOrWhiteSpace(RepoMetadata.Current.ConfigurationScript?.DefaultImage))
-        { 
+        {
             Information($"Setting default image '{RepoMetadata.Current.ConfigurationScript?.DefaultImage}'...");
             ProcessHelpers.RunWithFailure("ffvm", $"use {RepoMetadata.Current.ConfigurationScript?.DefaultImage}", "Failed to set Production image as default.");
 
