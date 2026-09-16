@@ -34,6 +34,20 @@ if [ -n "$CAKE_TEST_ECHO_ARGS" ]; then
     done
 fi
 
+# If the install target is called with an HTTP/HTTPS URL, download it to the project root first
+if [ "${1:-}" = "install" ] && [ "$#" -ge 2 ] && [[ "${2:-}" =~ ^https?:// ]]; then
+    CONFIG_URL="$2"
+    echo "Downloading configuration from ${CONFIG_URL}..."
+    CONFIG_FILENAME=$(basename "$CONFIG_URL")
+    DOWNLOAD_DEST="${SCRIPT_ROOT}/${CONFIG_FILENAME}"
+    curl -fsSL -o "$DOWNLOAD_DEST" "$CONFIG_URL" || {
+        echo >&2 "Failed to download configuration from ${CONFIG_URL}"
+        exit 1
+    }
+    echo "Downloaded to ${DOWNLOAD_DEST}"
+    set -- "$1" "${@:3}"
+fi
+
 # Define default arguments.
 SCRIPT="./.setup/dev/build.cake"
 CAKE_ARGUMENTS=()

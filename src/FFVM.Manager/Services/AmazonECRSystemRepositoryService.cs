@@ -131,6 +131,7 @@ public class AmazonEcrSystemRepositoryService(
             {
                 RegistryId = ecrRepositoryFullParts.FirstOrDefault(),
                 RepositoryName = ecrRepositoryName,
+                Filter = new ListImagesFilter { TagStatus = TagStatus.TAGGED }, 
             });
             if (describeImagesResult?.ImageIds == null)
             {
