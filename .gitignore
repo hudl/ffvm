@@ -114,3 +114,4 @@ crash.log
 .setup/build/*
 .setup/dev/tmp/*
 .setup/dev/tools/*
+configuration.json
