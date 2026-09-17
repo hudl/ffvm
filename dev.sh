@@ -38,8 +38,7 @@ fi
 if [ "${1:-}" = "install" ] && [ "$#" -ge 2 ] && [[ "${2:-}" =~ ^https?:// ]]; then
     CONFIG_URL="$2"
     echo "Downloading configuration from ${CONFIG_URL}..."
-    CONFIG_FILENAME=$(basename "$CONFIG_URL")
-    DOWNLOAD_DEST="${SCRIPT_ROOT}/${CONFIG_FILENAME}"
+    DOWNLOAD_DEST="${SCRIPT_ROOT}/configuration.json"
     curl -fsSL -o "$DOWNLOAD_DEST" "$CONFIG_URL" || {
         echo >&2 "Failed to download configuration from ${CONFIG_URL}"
         exit 1

@@ -89,8 +89,7 @@ if($EchoArgs) {
 if ($Target -eq "install" -and $ScriptArgs.Count -gt 0 -and $ScriptArgs[0] -match '^https?://') {
     $ConfigUrl = $ScriptArgs[0]
     Write-Output "Downloading configuration from $ConfigUrl..."
-    $ConfigFileName = [System.IO.Path]::GetFileName(([uri]$ConfigUrl).LocalPath)
-    $DownloadDest = Join-Path -Path $PSScriptRoot -ChildPath $ConfigFileName
+    $DownloadDest = Join-Path -Path $PSScriptRoot -ChildPath 'configuration.json'
     try {
         Invoke-WebRequest -Uri $ConfigUrl -OutFile $DownloadDest -UseBasicParsing
         Write-Output "Downloaded to $DownloadDest"
