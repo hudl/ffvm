@@ -10,7 +10,7 @@
     },
     "add-repository aws-ecr": {
       "commandName": "Project",
-      "commandLineArgs": "add-repository 843865964756.dkr.ecr.us-east-1.amazonaws.com/t-octo-ubuntu-24-development-container-image octo --profile PlatformEngineer_Octo_4756 --default"
+      "commandLineArgs": "add-repository 442854326980.dkr.ecr.us-east-1.amazonaws.com/ffoe-ecr thor-ffoe-ecr --profile Engineer_Main_0493 --default"
     },
     "remove-repository docker-hub": {
       "commandName": "Project",
@@ -46,7 +46,7 @@
     },
     "install image aws-ecr": {
       "commandName": "Project",
-      "commandLineArgs": "install dev-container:0.0.1-5 "
+      "commandLineArgs": "install thor-ffoe-ecr:7.1"
     },
     "help": {
       "commandName": "Project",
@@ -70,7 +70,7 @@
     },
     "list available aws-ecr": {
       "commandName": "Project",
-      "commandLineArgs": "list available octo"
+      "commandLineArgs": "list available thor-ffoe-ecr"
     },
     "list available docker-hub": {
       "commandName": "Project",

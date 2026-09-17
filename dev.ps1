@@ -85,6 +85,20 @@ if($EchoArgs) {
     }
 }
 
+# If the install target is called with an HTTP/HTTPS URL, download it to the project root first
+if ($Target -eq "install" -and $ScriptArgs.Count -gt 0 -and $ScriptArgs[0] -match '^https?://') {
+    $ConfigUrl = $ScriptArgs[0]
+    Write-Output "Downloading configuration from $ConfigUrl..."
+    $DownloadDest = Join-Path -Path $PSScriptRoot -ChildPath 'configuration.json'
+    try {
+        Invoke-WebRequest -Uri $ConfigUrl -OutFile $DownloadDest -UseBasicParsing
+        Write-Output "Downloaded to $DownloadDest"
+    } catch {
+        throw "Failed to download configuration from ${ConfigUrl}: $_"
+    }
+    $ScriptArgs = $ScriptArgs | Select-Object -Skip 1
+}
+
 $ScriptArgs = $ScriptArgs `
     | Where-Object { -not [System.String]::IsNullOrWhiteSpace($_) } `
     | ForEach-Object {

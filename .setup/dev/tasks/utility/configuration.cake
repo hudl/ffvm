@@ -31,6 +31,14 @@ public class CustomRepository
     public bool IsDefault { get; set; } = false; 
 }
 
+public class CustomImage
+{
+    [JsonProperty("version")]
+    public string Version { get; set; } = string.Empty;
+    [JsonProperty("name")]
+    public string Name { get; set; } = string.Empty;
+}
+
 public class CustomConfiguration
 {
     [JsonProperty("sharedSso")]
@@ -38,7 +46,7 @@ public class CustomConfiguration
     [JsonProperty("defaultImage")]
     public string DefaultImage { get; set; } = string.Empty;
     [JsonProperty("images")]
-    public List<string> Images { get; set; } = new List<string>(); 
+    public List<CustomImage> Images { get; set; } = new List<CustomImage>(); 
     [JsonProperty("variables")]
     public List<CustomVariable> Variables { get; set; } = new List<CustomVariable>();
     [JsonProperty("repositories")]
@@ -89,7 +97,8 @@ static class ConfigurationHelper
             //replace instances of custom variable in images
             for (var i = 0; i < customConfiguration.Images.Count; i++)
             { 
-                customConfiguration.Images[i] = customConfiguration.Images[i].Replace($"%{customVariable.Name}%", customVariable.ActualValue);
+                customConfiguration.Images[i].Name = customConfiguration.Images[i].Name.Replace($"%{customVariable.Name}%", customVariable.ActualValue);
+                customConfiguration.Images[i].Version = customConfiguration.Images[i].Version.Replace($"%{customVariable.Name}%", customVariable.ActualValue);
             }
 
             //replace instances of custom variable in repositories

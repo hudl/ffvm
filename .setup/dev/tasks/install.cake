@@ -153,10 +153,10 @@ Task("configure-installation")
             ProcessHelpers.RunWithFailure("ffvm", $"add-repository {repository.Url} {repository.Name} --profile {repository.Auth} {defaultText}", "Failed to add repository.");
         }
 
-        foreach (var image in RepoMetadata.Current.ConfigurationScript?.Images ?? new List<string>())
+        foreach (var image in RepoMetadata.Current.ConfigurationScript?.Images ?? new List<CustomImage>())
         {
             Information($"Downloading image '{image}'...");
-            ProcessHelpers.RunWithFailure("ffvm", $"install {image}", "Failed to install image.");
+            ProcessHelpers.RunWithFailure("ffvm", $"install {image.Version} --name {image.Name}", "Failed to install image.");
         }
 
         if (!string.IsNullOrWhiteSpace(RepoMetadata.Current.ConfigurationScript?.DefaultImage))
