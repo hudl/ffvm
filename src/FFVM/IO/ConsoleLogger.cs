@@ -13,7 +13,7 @@ public class ConsoleLogger : ILogger
     };
 
     public void WriteStdOut(string message, LogSeverity logSeverity = LogSeverity.Info) => Write(Console.Out, message, _consoleColorMap[logSeverity]);
-    public void WriteStdErr(string message, LogSeverity logSeverity = LogSeverity.Info) => Write(Console.Out, message, _consoleColorMap[logSeverity]);
+    public void WriteStdErr(string message, LogSeverity logSeverity = LogSeverity.Info) => Write(Console.Error, message, _consoleColorMap[logSeverity]);
     public void WriteStdErr(string message, Exception e)
     {
         Write(Console.Error, message, ConsoleColor.Red);
