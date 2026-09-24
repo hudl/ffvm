@@ -2,6 +2,14 @@
 
 public static class StringUrlExtensions
 {
+    public static bool IsUrl(this string value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return false;
+        var unescaped = value.Replace("\\:", ":");
+        return Uri.TryCreate(unescaped, UriKind.Absolute, out var uri)
+            && uri.Host.Length > 0;
+    }
+
     public static string SanitizeUrl(this string url)
     {
         if (string.IsNullOrWhiteSpace(url))

@@ -1,4 +1,4 @@
-﻿using FFVM.Base.Extensions;
+using FFVM.Base.Extensions;
 
 namespace FFVM.Base.IO;
 
@@ -33,6 +33,22 @@ public class DirectoryPath
     public string MappedUri { get => Path.Combine(_mappedDirectory, _originalFileName).SanitizeUrl(); }
     public string MappedDirectory { get => _mappedDirectory; }
 
+    private static readonly HashSet<string> _filterFlags = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "-filter_complex", "-vf", "-af", "-lavfi", "-filter_script"
+    };
+
+    public static bool IsFilterExpression(string[] args, int index)
+    {
+        var prevArgument = args.Length > index - 1 && index > 0 ? args[index - 1] : string.Empty;
+        return _filterFlags.Contains(prevArgument);
+    }
+
+    public static DirectoryPath FromPath(string path, int index)
+    {
+        return new DirectoryPath(path, index);
+    }
+
     public static bool TryParse(string[] args, int index, out DirectoryPath? pathValidityCheckerMapper)
     {
         pathValidityCheckerMapper = default;
@@ -42,6 +58,18 @@ public class DirectoryPath
             var prevArgument = args.Length > index - 1 && index > 0 ? args[index - 1] : string.Empty;
             if (string.IsNullOrWhiteSpace(currArgument) ||
                 string.IsNullOrWhiteSpace(prevArgument))
+            {
+                return false;
+            }
+
+            if (currArgument.IsUrl())
+            {
+                return false;
+            }
+
+            // Filter expressions are containers of tokens (paths, URLs, filter graph syntax).
+            // The parser scans them for embedded paths separately; do not treat the whole arg as one path.
+            if (_filterFlags.Contains(prevArgument))
             {
                 return false;
             }
