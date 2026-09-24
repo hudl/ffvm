@@ -103,4 +103,65 @@ public class ArgumentParserAndSanitizerTests
         Assert.DoesNotContain("something.mp4:/mnt", result.DockerArguments);
     }
 
+    [Theory]
+    [InlineData("-vf")]
+    [InlineData("-af")]
+    [InlineData("-lavfi")]
+    [InlineData("-filter_script")]
+    public void TranslatesEmbeddedPathsForAllFilterFlags(string filterFlag)
+    {
+        var filtergraph = "movie=/tmp/overlay.png[ol];[0][ol]overlay=10:10 [out]";
+        var args = new[] { "-i", "/tmp/input.mp4", filterFlag, filtergraph, "output.mp4" };
+
+        var result = ArgumentParserAndSanitizer.GetSanitizedArgumentsAndPathResults(args);
+
+        Assert.DoesNotContain("/tmp/overlay.png", result.FFUtilityArguments);
+        Assert.Contains("overlay.png", result.FFUtilityArguments);
+        Assert.Contains("/tmp:/mnt/", result.DockerArguments);
+    }
+
+    [Fact]
+    public void WrapsFiltergraphValueInQuotes()
+    {
+        // DirectoryPathParser quotes the filtergraph value in the emitted command.
+        // A missing quote would silently produce a malformed docker invocation.
+        var filtergraph = "[0:v]scale=1280:720[out]";
+        var args = new[] { "-i", "/tmp/input.mp4", "-filter_complex", filtergraph, "output.mp4" };
+
+        var result = ArgumentParserAndSanitizer.GetSanitizedArgumentsAndPathResults(args);
+
+        Assert.Contains($"-filter_complex \"{filtergraph}\"", result.FFUtilityArguments);
+    }
+
+    [Fact]
+    public void TranslatesEscapedUrlInputWithoutVolumeMounting()
+    {
+        // FFmpeg uses https\:// (escaped colon) in filtergraph contexts. IsUrl() handles this
+        // form, but the TryParse guard must also wire it correctly for top-level -i args.
+        var args = new[] { "-i", @"https\://example.com/video.mp4", "output.mp4" };
+
+        var result = ArgumentParserAndSanitizer.GetSanitizedArgumentsAndPathResults(args);
+
+        Assert.Contains(@"https\://example.com/video.mp4", result.FFUtilityArguments);
+        Assert.DoesNotContain("example.com", result.DockerArguments);
+    }
+
+    [Fact]
+    public void MountsWindowsPathEmbeddedInFiltergraph()
+    {
+        if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                System.Runtime.InteropServices.OSPlatform.Windows))
+        {
+            return;
+        }
+
+        var filtergraph = @"movie=C\:/assets/overlay.png[ol];[0][ol]overlay=10:10 [out]";
+        var args = new[] { "-i", @"C\:/input/input.mp4", "-filter_complex", filtergraph, "output.mp4" };
+
+        var result = ArgumentParserAndSanitizer.GetSanitizedArgumentsAndPathResults(args);
+
+        Assert.Contains(@"C\:/assets:/mnt/", result.DockerArguments);
+        Assert.DoesNotContain(@"C\:/assets/overlay.png", result.FFUtilityArguments);
+    }
+
 }
